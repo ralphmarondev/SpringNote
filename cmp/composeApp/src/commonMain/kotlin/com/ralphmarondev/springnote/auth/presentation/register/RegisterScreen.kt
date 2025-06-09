@@ -1,4 +1,4 @@
-package com.ralphmarondev.springnote.auth.presentation.login
+package com.ralphmarondev.springnote.auth.presentation.register
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -48,14 +48,13 @@ import org.koin.core.annotation.KoinExperimentalAPI
 
 @OptIn(ExperimentalMaterial3Api::class, KoinExperimentalAPI::class)
 @Composable
-fun LoginScreen(
-    navigateToHome: () -> Unit,
-    navigateToRegister: () -> Unit
+fun RegisterScreen(
+    navigateToLogin: () -> Unit
 ) {
     val themeSettings = LocalThemeSettings.current
     val focusManager = LocalFocusManager.current
 
-    val viewModel: LoginViewModel = koinViewModel()
+    val viewModel: RegisterViewModel = koinViewModel()
     val username = viewModel.username.collectAsState().value
     val password = viewModel.password.collectAsState().value
     val response = viewModel.response.collectAsState().value
@@ -64,8 +63,7 @@ fun LoginScreen(
     LaunchedEffect(response) {
         response?.let {
             if (it.success) {
-                println("Login successful [navigateToHome()]")
-                navigateToHome()
+                navigateToLogin()
             } else {
                 viewModel.setShowSnackbar(true)
             }
@@ -78,7 +76,7 @@ fun LoginScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Login"
+                        text = "Register"
                     )
                 },
                 actions = {
@@ -162,25 +160,25 @@ fun LoginScreen(
 
                             Spacer(modifier = Modifier.height(8.dp))
                             Button(
-                                onClick = viewModel::login,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp)
-                            ) {
-                                Text(
-                                    text = "LOGIN",
-                                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                                    fontWeight = MaterialTheme.typography.titleMedium.fontWeight
-                                )
-                            }
-                            OutlinedButton(
-                                onClick = navigateToRegister,
+                                onClick = viewModel::register,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(16.dp)
                             ) {
                                 Text(
                                     text = "REGISTER",
+                                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                                    fontWeight = MaterialTheme.typography.titleMedium.fontWeight
+                                )
+                            }
+                            OutlinedButton(
+                                onClick = navigateToLogin,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp)
+                            ) {
+                                Text(
+                                    text = "LOGIN",
                                     fontSize = MaterialTheme.typography.titleMedium.fontSize,
                                     fontWeight = MaterialTheme.typography.titleMedium.fontWeight
                                 )
@@ -200,7 +198,7 @@ fun LoginScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     GradientSnackBar(
-                        message = response?.message ?: "Login failed.",
+                        message = response?.message ?: "Registration failed.",
                         actionLabel = "OK",
                         onAction = { viewModel.setShowSnackbar(false) }
                     )
