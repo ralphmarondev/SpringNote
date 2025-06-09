@@ -27,4 +27,8 @@ class NoteRepositoryImpl(
             emit(emptyList())
         }
     }
+
+    override suspend fun saveNote(title: String, content: String) {
+
+    }
 }

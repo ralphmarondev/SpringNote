@@ -4,6 +4,8 @@ import com.ralphmarondev.springnote.note.data.network.NoteApiService
 import com.ralphmarondev.springnote.note.data.repository.NoteRepositoryImpl
 import com.ralphmarondev.springnote.note.domain.repository.NoteRepository
 import com.ralphmarondev.springnote.note.domain.usecase.GetAllNotesUseCase
+import com.ralphmarondev.springnote.note.domain.usecase.SaveNoteUseCase
+import com.ralphmarondev.springnote.note.presentation.new_note.NewNoteViewModel
 import com.ralphmarondev.springnote.note.presentation.note_list.NoteListViewModel
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
@@ -15,6 +17,8 @@ val noteModule = module {
     singleOf(::NoteRepositoryImpl).bind<NoteRepository>()
 
     factoryOf(::GetAllNotesUseCase)
+    factoryOf(::SaveNoteUseCase)
 
     factoryOf(::NoteListViewModel)
+    factoryOf(::NewNoteViewModel)
 }
