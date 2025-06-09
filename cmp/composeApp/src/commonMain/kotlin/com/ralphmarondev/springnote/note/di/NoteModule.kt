@@ -7,9 +7,11 @@ import com.ralphmarondev.springnote.note.domain.usecase.DeleteNoteByIdUseCase
 import com.ralphmarondev.springnote.note.domain.usecase.GetAllNotesUseCase
 import com.ralphmarondev.springnote.note.domain.usecase.GetNoteByIdUseCase
 import com.ralphmarondev.springnote.note.domain.usecase.SaveNoteUseCase
+import com.ralphmarondev.springnote.note.domain.usecase.UpdateNoteUseCase
 import com.ralphmarondev.springnote.note.presentation.new_note.NewNoteViewModel
 import com.ralphmarondev.springnote.note.presentation.note_details.NoteDetailsViewModel
 import com.ralphmarondev.springnote.note.presentation.note_list.NoteListViewModel
+import com.ralphmarondev.springnote.note.presentation.update_note.UpdateNoteViewModel
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -23,8 +25,10 @@ val noteModule = module {
     factoryOf(::GetNoteByIdUseCase)
     factoryOf(::SaveNoteUseCase)
     factoryOf(::DeleteNoteByIdUseCase)
+    factoryOf(::UpdateNoteUseCase)
 
     factoryOf(::NoteListViewModel)
     factoryOf(::NewNoteViewModel)
     factoryOf(::NoteDetailsViewModel)
+    factoryOf(::UpdateNoteViewModel)
 }

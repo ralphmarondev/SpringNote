@@ -10,6 +10,7 @@ import com.ralphmarondev.springnote.auth.presentation.login.LoginScreen
 import com.ralphmarondev.springnote.note.presentation.new_note.NewNoteScreen
 import com.ralphmarondev.springnote.note.presentation.note_details.NoteDetailsScreen
 import com.ralphmarondev.springnote.note.presentation.note_list.NoteListScreen
+import com.ralphmarondev.springnote.note.presentation.update_note.UpdateNoteScreen
 
 @Composable
 fun AppNavigation(
@@ -53,6 +54,20 @@ fun AppNavigation(
             val id = it.toRoute<Routes.NoteDetails>().id
             NoteDetailsScreen(
                 id = id,
+                navigateBack = {
+                    navController.navigateUp()
+                },
+                navigateToUpdateNote = { id ->
+                    navController.navigate(Routes.UpdateNote(id)) {
+                        launchSingleTop = true
+                    }
+                }
+            )
+        }
+        composable<Routes.UpdateNote> {
+            val id = it.toRoute<Routes.UpdateNote>().id
+            UpdateNoteScreen(
+                noteId = id,
                 navigateBack = {
                     navController.navigateUp()
                 }

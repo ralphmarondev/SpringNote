@@ -38,7 +38,8 @@ import org.koin.core.parameter.parametersOf
 @Composable
 fun NoteDetailsScreen(
     id: String,
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
+    navigateToUpdateNote: (String) -> Unit
 ) {
     val viewModel: NoteDetailsViewModel = koinViewModel(parameters = { parametersOf(id) })
     val note = viewModel.note.collectAsState().value
@@ -64,7 +65,9 @@ fun NoteDetailsScreen(
                 },
                 actions = {
                     IconButton(
-                        onClick = {}
+                        onClick = {
+                            navigateToUpdateNote(id)
+                        }
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Update,
