@@ -121,7 +121,10 @@ fun NoteListScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(notes) { note ->
+                items(
+                    items = notes,
+                    key = { note -> note.id }
+                ) { note ->
                     NoteCard(
                         note = note,
                         modifier = Modifier
