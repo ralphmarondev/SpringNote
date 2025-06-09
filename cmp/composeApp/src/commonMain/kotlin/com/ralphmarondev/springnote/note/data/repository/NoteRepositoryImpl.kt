@@ -59,6 +59,25 @@ class NoteRepositoryImpl(
         return note
     }
 
+    override suspend fun updateNote(note: Note): Note {
+        val response = apiService.updateNote(
+            id = note.id,
+            noteRequest = NoteRequest(
+                title = note.title,
+                content = note.content,
+                color = note.color
+            )
+        )
+        val newNote = Note(
+            id = response.id,
+            title = response.title,
+            content = response.content,
+            color = response.color,
+            createdAt = response.createdAt
+        )
+        return newNote
+    }
+
     override suspend fun deleteNoteById(id: String) {
         apiService.deleteNoteById(id)
     }

@@ -27,9 +27,25 @@ class UpdateNoteUseCase(
             )
         }
 
-        return Result(
-            success = true,
-            message = "Note updated successfully."
-        )
+        return try {
+            val response = repository.updateNote(note)
+
+            if (response.id.isBlank()) {
+                Result(
+                    success = false,
+                    message = "Updating note failed."
+                )
+            } else {
+                Result(
+                    success = true,
+                    message = "Note updated successfully."
+                )
+            }
+        } catch (e: Exception) {
+            Result(
+                success = false,
+                message = "Updating note failed. Error: ${e.message}"
+            )
+        }
     }
 }
