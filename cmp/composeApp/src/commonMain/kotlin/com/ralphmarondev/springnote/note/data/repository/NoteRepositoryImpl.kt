@@ -58,4 +58,8 @@ class NoteRepositoryImpl(
         )
         return note
     }
+
+    override suspend fun deleteNoteById(id: String) {
+        apiService.deleteNoteById(id)
+    }
 }

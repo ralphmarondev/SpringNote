@@ -3,6 +3,7 @@ package com.ralphmarondev.springnote.note.di
 import com.ralphmarondev.springnote.note.data.network.NoteApiService
 import com.ralphmarondev.springnote.note.data.repository.NoteRepositoryImpl
 import com.ralphmarondev.springnote.note.domain.repository.NoteRepository
+import com.ralphmarondev.springnote.note.domain.usecase.DeleteNoteByIdUseCase
 import com.ralphmarondev.springnote.note.domain.usecase.GetAllNotesUseCase
 import com.ralphmarondev.springnote.note.domain.usecase.GetNoteByIdUseCase
 import com.ralphmarondev.springnote.note.domain.usecase.SaveNoteUseCase
@@ -21,6 +22,7 @@ val noteModule = module {
     factoryOf(::GetAllNotesUseCase)
     factoryOf(::GetNoteByIdUseCase)
     factoryOf(::SaveNoteUseCase)
+    factoryOf(::DeleteNoteByIdUseCase)
 
     factoryOf(::NoteListViewModel)
     factoryOf(::NewNoteViewModel)

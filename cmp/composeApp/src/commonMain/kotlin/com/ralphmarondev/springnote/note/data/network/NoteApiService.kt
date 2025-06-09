@@ -5,6 +5,7 @@ import com.ralphmarondev.springnote.note.data.model.Note
 import com.ralphmarondev.springnote.note.data.model.NoteRequest
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
@@ -27,5 +28,9 @@ class NoteApiService(
             contentType(ContentType.Application.Json)
             setBody(noteRequest)
         }.body()
+    }
+
+    suspend fun deleteNoteById(id: String) {
+        httpClient.delete("$BASE_URL/notes/$id")
     }
 }

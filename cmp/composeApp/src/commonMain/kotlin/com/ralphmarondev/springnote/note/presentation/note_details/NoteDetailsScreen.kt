@@ -24,10 +24,12 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.delay
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.core.parameter.parametersOf
@@ -40,7 +42,17 @@ fun NoteDetailsScreen(
 ) {
     val viewModel: NoteDetailsViewModel = koinViewModel(parameters = { parametersOf(id) })
     val note = viewModel.note.collectAsState().value
+    val response = viewModel.response.collectAsState().value
     val showConfirmDeleteDialog = viewModel.showConfirmDeleteDialog.collectAsState().value
+
+    LaunchedEffect(response) {
+        response?.let {
+            if (it.success) {
+                delay(3000)
+                navigateBack()
+            }
+        }
+    }
 
     Scaffold(
         topBar = {
