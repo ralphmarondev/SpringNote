@@ -56,8 +56,8 @@ fun NewNoteScreen(
                 println("Note saved successfully.")
             } else {
                 println("Error saving note.")
-                viewModel.setShowSnackbar(true)
             }
+            viewModel.setShowSnackbar(true)
             viewModel.resetResponse()
         }
     }

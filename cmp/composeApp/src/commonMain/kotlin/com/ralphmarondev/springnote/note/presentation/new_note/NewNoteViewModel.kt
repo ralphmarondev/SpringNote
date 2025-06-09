@@ -25,6 +25,8 @@ class NewNoteViewModel(
     private val _showSnackbar = MutableStateFlow(false)
     val showSnackbar = _showSnackbar.asStateFlow()
 
+    private val _isSaving = MutableStateFlow(false)
+
 
     fun onTitleValueChange(value: String) {
         _title.value = value
@@ -40,11 +42,22 @@ class NewNoteViewModel(
 
     fun save() {
         viewModelScope.launch {
+            if (_isSaving.value) {
+                return@launch
+            }
+            _isSaving.value = true
+
             val result = saveNoteUseCase(
                 title = _title.value.trim(),
                 content = _content.value.trim()
             )
             _response.value = result
+
+            if (_response.value?.success == true) {
+                _title.value = ""
+                _content.value = ""
+            }
+            _isSaving.value = false
         }
     }
 
