@@ -9,5 +9,8 @@ object Routes {
     data object Login
 
     @Serializable
-    data object Home
+    data object NoteList
+
+    @Serializable
+    data object NewNote
 }
