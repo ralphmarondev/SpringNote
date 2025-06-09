@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ralphmarondev.springnote.note.domain.model.Note
 import com.ralphmarondev.springnote.note.domain.usecase.GetAllNotesUseCase
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class NoteListViewModel(
@@ -17,13 +17,30 @@ class NoteListViewModel(
     val notes = _notes.asStateFlow()
 
     init {
-        fetchNotes()
+        startPolling()
     }
 
-    private fun fetchNotes() {
+    private fun startPolling() {
         viewModelScope.launch {
-            getAllNotesUseCase().collectLatest { noteList ->
-                _notes.value = noteList
+            while (true) {
+                try {
+                    _notes.value = getAllNotesUseCase()
+                } catch (e: Exception) {
+                    println("Error: ${e.message}")
+                }
+                delay(60_000L) // 1 minute
+            }
+        }
+    }
+
+    fun refresh(onDone: () -> Unit) {
+        viewModelScope.launch {
+            try {
+                _notes.value = getAllNotesUseCase()
+            } catch (e: Exception) {
+                println("Refresh error: ${e.message}")
+            } finally {
+                onDone()
             }
         }
     }
