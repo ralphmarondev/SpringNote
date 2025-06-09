@@ -75,6 +75,28 @@ class NoteController(
         return note.toResponse()
     }
 
+    @PutMapping("/{id}")
+    fun updateNote(
+        @PathVariable id: String,
+        @Valid @RequestBody body: NoteRequest
+    ): NoteResponse {
+        val ownerId = SecurityContextHolder.getContext().authentication.principal as String
+        val existingNote = repository.findById(ObjectId(id)).orElseThrow {
+            IllegalArgumentException("Note not found")
+        }
+
+        if (existingNote.ownerId.toHexString() != ownerId) {
+            throw IllegalAccessError("You are not authorized to update this note.")
+        }
+
+        val updatedNote = existingNote.copy(
+            title = body.title,
+            content = body.content,
+            color = body.color
+        )
+        return repository.save(updatedNote).toResponse()
+    }
+
     @DeleteMapping(path = ["/{id}"])
     fun deleteById(@PathVariable id: String) {
         val note = repository.findById(ObjectId(id)).orElseThrow {
