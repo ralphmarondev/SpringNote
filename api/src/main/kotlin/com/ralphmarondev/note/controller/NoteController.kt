@@ -62,6 +62,19 @@ class NoteController(
         }
     }
 
+    @GetMapping("/{id}")
+    fun findById(@PathVariable id: String): NoteResponse {
+        val ownerId = SecurityContextHolder.getContext().authentication.principal as String
+        val note = repository.findById(ObjectId(id)).orElseThrow {
+            IllegalArgumentException("Note not found")
+        }
+
+        if (note.ownerId.toHexString() != ownerId) {
+            throw IllegalAccessError("You are not authorized to access this note.")
+        }
+        return note.toResponse()
+    }
+
     @DeleteMapping(path = ["/{id}"])
     fun deleteById(@PathVariable id: String) {
         val note = repository.findById(ObjectId(id)).orElseThrow {
