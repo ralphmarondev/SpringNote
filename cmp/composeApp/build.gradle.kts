@@ -114,9 +114,10 @@ compose.desktop {
         mainClass = "com.ralphmarondev.springnote.MainKt"
 
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.ralphmarondev.springnote"
+            targetFormats(TargetFormat.Msi, TargetFormat.Dmg, TargetFormat.Deb)
+            packageName = "SpringNote"
             packageVersion = "1.0.0"
+            vendor = "Ralph Maron Eda"
         }
     }
 }
