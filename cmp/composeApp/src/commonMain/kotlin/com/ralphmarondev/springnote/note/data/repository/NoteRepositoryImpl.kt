@@ -29,6 +29,18 @@ class NoteRepositoryImpl(
         }
     }
 
+    override suspend fun getNoteById(id: String): Note {
+        val response = apiService.getNoteById(id)
+        val note = Note(
+            id = response.id,
+            title = response.title,
+            content = response.content,
+            color = response.color,
+            createdAt = response.createdAt
+        )
+        return note
+    }
+
     override suspend fun saveNote(title: String, content: String): Note {
         val response = apiService.saveNote(
             noteRequest = NoteRequest(

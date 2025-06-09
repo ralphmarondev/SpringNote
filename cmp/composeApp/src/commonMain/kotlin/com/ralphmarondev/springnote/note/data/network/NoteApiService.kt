@@ -18,6 +18,10 @@ class NoteApiService(
         return httpClient.get("$BASE_URL/notes").body()
     }
 
+    suspend fun getNoteById(id: String): Note {
+        return httpClient.get("$BASE_URL/notes/$id").body()
+    }
+
     suspend fun saveNote(noteRequest: NoteRequest): Note {
         return httpClient.post("$BASE_URL/notes") {
             contentType(ContentType.Application.Json)

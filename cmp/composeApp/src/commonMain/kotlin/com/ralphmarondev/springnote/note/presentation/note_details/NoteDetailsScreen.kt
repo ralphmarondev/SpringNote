@@ -39,6 +39,7 @@ fun NoteDetailsScreen(
     navigateBack: () -> Unit
 ) {
     val viewModel: NoteDetailsViewModel = koinViewModel(parameters = { parametersOf(id) })
+    val note = viewModel.note.collectAsState().value
     val showConfirmDeleteDialog = viewModel.showConfirmDeleteDialog.collectAsState().value
 
     Scaffold(
@@ -106,7 +107,7 @@ fun NoteDetailsScreen(
                         color = MaterialTheme.colorScheme.tertiary
                     )
                     Text(
-                        text = "Some title lol",
+                        text = "${note?.title}",
                         fontSize = MaterialTheme.typography.titleMedium.fontSize,
                         fontWeight = MaterialTheme.typography.titleMedium.fontWeight,
                         color = MaterialTheme.colorScheme.secondary
@@ -119,7 +120,7 @@ fun NoteDetailsScreen(
                         color = MaterialTheme.colorScheme.tertiary
                     )
                     Text(
-                        text = "Some content lol",
+                        text = "${note?.content}",
                         fontSize = MaterialTheme.typography.titleMedium.fontSize,
                         fontWeight = MaterialTheme.typography.titleMedium.fontWeight,
                         color = MaterialTheme.colorScheme.secondary
