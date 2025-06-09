@@ -33,22 +33,32 @@ class LoginUseCase(
             )
         }
 
-        val tokenPair = repository.login(username, password)
-        if (tokenPair.access.isBlank() || tokenPair.refresh.isBlank()) {
-            return Result(
+        return try {
+            val tokenPair = repository.login(username, password)
+            if (tokenPair.access.isBlank() || tokenPair.refresh.isBlank()) {
+                return Result(
+                    success = false,
+                    message = "Tokens cannot be blank."
+                )
+            }
+            println("Access token: ${tokenPair.access}")
+            println("Refresh token: ${tokenPair.refresh}")
+
+            dataStore.edit {
+                it[ACCESS_TOKEN_KEY] = tokenPair.access
+                it[REFRESH_TOKEN_KEY] = tokenPair.refresh
+            }
+
+            Result(
+                success = true,
+                message = "Login successful."
+            )
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            Result(
                 success = false,
-                message = "Tokens cannot be blank."
+                message = "Unexpected error occurred."
             )
         }
-
-        dataStore.edit {
-            it[ACCESS_TOKEN_KEY] = tokenPair.access
-            it[REFRESH_TOKEN_KEY] = tokenPair.refresh
-        }
-
-        return Result(
-            success = true,
-            message = "Login successful."
-        )
     }
 }

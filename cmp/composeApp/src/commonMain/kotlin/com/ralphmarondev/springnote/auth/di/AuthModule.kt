@@ -1,5 +1,6 @@
 package com.ralphmarondev.springnote.auth.di
 
+import com.ralphmarondev.springnote.auth.data.network.AuthApiService
 import com.ralphmarondev.springnote.auth.data.repository.AuthRepositoryImpl
 import com.ralphmarondev.springnote.auth.domain.repository.AuthRepository
 import com.ralphmarondev.springnote.auth.domain.usecase.LoginUseCase
@@ -10,6 +11,7 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val authModule = module {
+    singleOf(::AuthApiService)
     singleOf(::AuthRepositoryImpl).bind<AuthRepository>()
 
     factoryOf(::LoginUseCase)
