@@ -29,18 +29,26 @@ class SaveNoteUseCase(
         }
 
         return try {
-            repository.saveNote(
+            val note = repository.saveNote(
                 title = title,
                 content = content
             )
-            Result(
-                success = true,
-                message = "Note saved successfully."
-            )
+            if (note.id.isBlank()) {
+                Result(
+                    success = false,
+                    message = "Saving note failed."
+                )
+            } else {
+                Result(
+                    success = true,
+                    message = "Note saved successfully."
+                )
+            }
         } catch (e: Exception) {
+            println("Error saving note: ${e.message}")
             Result(
                 success = false,
-                message = "Saving note failed."
+                message = "Unexpected error occurred."
             )
         }
     }

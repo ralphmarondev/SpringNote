@@ -1,5 +1,6 @@
 package com.ralphmarondev.springnote.note.data.repository
 
+import com.ralphmarondev.springnote.note.data.model.NoteRequest
 import com.ralphmarondev.springnote.note.data.network.NoteApiService
 import com.ralphmarondev.springnote.note.domain.model.Note
 import com.ralphmarondev.springnote.note.domain.repository.NoteRepository
@@ -28,7 +29,21 @@ class NoteRepositoryImpl(
         }
     }
 
-    override suspend fun saveNote(title: String, content: String) {
-
+    override suspend fun saveNote(title: String, content: String): Note {
+        val response = apiService.saveNote(
+            noteRequest = NoteRequest(
+                title = title,
+                content = content,
+                color = 1
+            )
+        )
+        val note = Note(
+            id = response.id,
+            title = response.title,
+            content = response.content,
+            color = response.color,
+            createdAt = response.createdAt
+        )
+        return note
     }
 }
