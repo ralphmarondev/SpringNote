@@ -1,28 +1,30 @@
 package com.ralphmarondev.springnote.note.data.repository
 
+import com.ralphmarondev.springnote.note.data.network.NoteApiService
 import com.ralphmarondev.springnote.note.domain.model.Note
 import com.ralphmarondev.springnote.note.domain.repository.NoteRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
 
-class NoteRepositoryImpl : NoteRepository {
+class NoteRepositoryImpl(
+    private val apiService: NoteApiService
+) : NoteRepository {
     override fun getAllNotes(): Flow<List<Note>> {
-        val sampleNotes = listOf(
-            Note(
-                id = "1",
-                title = "Hello",
-                content = "Sample content",
-                color = 2,
-                createdAt = "2025-06-08"
-            ),
-            Note(
-                id = "2",
-                title = "Hi there",
-                content = "Ralph Maron Eda is here!",
-                color = 2,
-                createdAt = "2025-06-09"
-            )
-        )
-        return flowOf(sampleNotes)
+        return flow {
+            val notesData = apiService.getAllNotes()
+            val notes = notesData.map {
+                Note(
+                    id = it.id,
+                    title = it.title,
+                    content = it.content,
+                    color = it.color,
+                    createdAt = it.createdAt
+                )
+            }
+            emit(notes)
+        }.catch { e ->
+            emit(emptyList())
+        }
     }
 }

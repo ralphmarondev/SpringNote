@@ -1,5 +1,7 @@
 package com.ralphmarondev.springnote.core.data.network
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.HttpTimeout
@@ -15,7 +17,10 @@ import kotlinx.serialization.json.Json
 
 object HttpClientFactory {
 
-    fun create(engine: HttpClientEngine): HttpClient {
+    fun create(
+        engine: HttpClientEngine,
+        dataStore: DataStore<Preferences>
+    ): HttpClient {
         return HttpClient(engine) {
             install(ContentNegotiation) {
                 json(
@@ -36,6 +41,7 @@ object HttpClientFactory {
                 }
                 level = LogLevel.ALL
             }
+            install(AuthTokenInterceptor(dataStore).plugin)
             defaultRequest {
                 contentType(ContentType.Application.Json)
             }
