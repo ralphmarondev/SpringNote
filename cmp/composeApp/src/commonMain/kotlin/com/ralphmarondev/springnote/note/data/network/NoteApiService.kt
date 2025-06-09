@@ -5,7 +5,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 
-private const val BASE_URL = "http://localhost:8085"
+private const val BASE_URL = "http://192.168.68.114:8085"
 
 class NoteApiService(
     private val httpClient: HttpClient

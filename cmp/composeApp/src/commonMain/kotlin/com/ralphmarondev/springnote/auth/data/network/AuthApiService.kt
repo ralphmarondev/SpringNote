@@ -7,7 +7,7 @@ import io.ktor.client.call.body
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 
-private const val BASE_URL = "http://localhost:8085/auth"
+private const val BASE_URL = "http://192.168.68.114:8085/auth"
 
 class AuthApiService(
     private val httpClient: HttpClient
