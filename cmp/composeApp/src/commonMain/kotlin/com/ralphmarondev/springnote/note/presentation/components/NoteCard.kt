@@ -1,4 +1,4 @@
-package com.ralphmarondev.springnote.note.presentation.note_list.components
+package com.ralphmarondev.springnote.note.presentation.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

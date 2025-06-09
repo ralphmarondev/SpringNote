@@ -27,7 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ralphmarondev.springnote.core.settings.LocalThemeSettings
-import com.ralphmarondev.springnote.note.presentation.note_list.components.NoteCard
+import com.ralphmarondev.springnote.note.presentation.components.NoteCard
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 
