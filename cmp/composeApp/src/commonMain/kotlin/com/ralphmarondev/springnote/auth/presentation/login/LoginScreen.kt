@@ -47,7 +47,9 @@ import org.koin.core.annotation.KoinExperimentalAPI
 
 @OptIn(ExperimentalMaterial3Api::class, KoinExperimentalAPI::class)
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    navigateToHome: () -> Unit
+) {
     val themeSettings = LocalThemeSettings.current
     val focusManager = LocalFocusManager.current
 
@@ -61,6 +63,7 @@ fun LoginScreen() {
         response?.let {
             if (it.success) {
                 println("Login successful [navigateToHome()]")
+                navigateToHome()
             } else {
                 viewModel.setShowSnackbar(true)
             }
