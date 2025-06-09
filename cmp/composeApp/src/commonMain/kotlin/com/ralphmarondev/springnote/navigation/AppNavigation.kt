@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ralphmarondev.springnote.auth.presentation.login.LoginScreen
+import com.ralphmarondev.springnote.note.presentation.new_note.NewNoteScreen
 import com.ralphmarondev.springnote.note.presentation.note_list.NoteListScreen
 
 @Composable
@@ -26,7 +27,20 @@ fun AppNavigation(
             )
         }
         composable<Routes.NoteList> {
-            NoteListScreen()
+            NoteListScreen(
+                navigateToNewNote = {
+                    navController.navigate(Routes.NewNote) {
+                        launchSingleTop = true
+                    }
+                }
+            )
+        }
+        composable<Routes.NewNote> {
+            NewNoteScreen(
+                navigateBack = {
+                    navController.navigateUp()
+                }
+            )
         }
     }
 }

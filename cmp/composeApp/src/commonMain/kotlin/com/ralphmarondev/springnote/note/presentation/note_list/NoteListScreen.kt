@@ -33,7 +33,9 @@ import org.koin.core.annotation.KoinExperimentalAPI
 
 @OptIn(ExperimentalMaterial3Api::class, KoinExperimentalAPI::class)
 @Composable
-fun NoteListScreen() {
+fun NoteListScreen(
+    navigateToNewNote: () -> Unit
+) {
     val themeSettings = LocalThemeSettings.current
     val viewModel: NoteListViewModel = koinViewModel()
     val notes = viewModel.notes.collectAsState().value
@@ -69,9 +71,7 @@ fun NoteListScreen() {
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = {}
-            ) {
+            FloatingActionButton(onClick = navigateToNewNote) {
                 Icon(
                     imageVector = Icons.Outlined.Add,
                     contentDescription = "New note"
