@@ -20,4 +20,16 @@ class AuthRepositoryImpl(
             refresh = response.refreshToken
         )
     }
+
+    override suspend fun register(
+        email: String,
+        password: String
+    ) {
+        authApiService.register(
+            authRequest = AuthRequest(
+                email = email,
+                password = password
+            )
+        )
+    }
 }

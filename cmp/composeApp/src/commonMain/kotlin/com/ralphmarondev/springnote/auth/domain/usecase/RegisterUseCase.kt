@@ -1,13 +1,10 @@
 package com.ralphmarondev.springnote.auth.domain.usecase
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import com.ralphmarondev.springnote.auth.domain.repository.AuthRepository
 import com.ralphmarondev.springnote.core.domain.model.Result
 
 class RegisterUseCase(
-    private val repository: AuthRepository,
-    private val dataStore: DataStore<Preferences>
+    private val repository: AuthRepository
 ) {
     suspend operator fun invoke(username: String, password: String): Result {
 
@@ -31,9 +28,13 @@ class RegisterUseCase(
         }
 
         return try {
+            repository.register(
+                email = username,
+                password = password
+            )
             Result(
                 success = true,
-                message = "Login successful."
+                message = "Registration successful."
             )
         } catch (e: Exception) {
             println("Error: ${e.message}")

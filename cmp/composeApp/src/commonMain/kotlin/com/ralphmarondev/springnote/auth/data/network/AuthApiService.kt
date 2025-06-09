@@ -16,4 +16,10 @@ class AuthApiService(
             setBody(authRequest)
         }.body()
     }
+
+    suspend fun register(authRequest: AuthRequest) {
+        httpClient.post("$BASE_URL/auth/register") {
+            setBody(authRequest)
+        }
+    }
 }
