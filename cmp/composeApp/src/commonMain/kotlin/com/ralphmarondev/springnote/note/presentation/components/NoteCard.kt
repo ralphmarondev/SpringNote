@@ -14,10 +14,12 @@ import com.ralphmarondev.springnote.note.domain.model.Note
 @Composable
 fun NoteCard(
     modifier: Modifier = Modifier,
-    note: Note
+    note: Note,
+    onClick: () -> Unit
 ) {
     OutlinedCard(
-        modifier = modifier
+        modifier = modifier,
+        onClick = onClick
     ) {
         Column(
             modifier = Modifier

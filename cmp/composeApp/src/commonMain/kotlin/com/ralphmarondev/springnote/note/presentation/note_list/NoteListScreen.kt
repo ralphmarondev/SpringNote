@@ -44,6 +44,7 @@ import org.koin.core.annotation.KoinExperimentalAPI
 @OptIn(ExperimentalMaterial3Api::class, KoinExperimentalAPI::class)
 @Composable
 fun NoteListScreen(
+    navigateToDetails: (String) -> Unit,
     navigateToNewNote: () -> Unit
 ) {
     val themeSettings = LocalThemeSettings.current
@@ -129,7 +130,10 @@ fun NoteListScreen(
                         note = note,
                         modifier = Modifier
                             .widthIn(max = 500.dp)
-                            .fillMaxWidth()
+                            .fillMaxWidth(),
+                        onClick = {
+                            navigateToDetails(note.id)
+                        }
                     )
                 }
                 item { Spacer(modifier = Modifier.height(100.dp)) }

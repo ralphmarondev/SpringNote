@@ -6,6 +6,7 @@ import com.ralphmarondev.springnote.note.domain.repository.NoteRepository
 import com.ralphmarondev.springnote.note.domain.usecase.GetAllNotesUseCase
 import com.ralphmarondev.springnote.note.domain.usecase.SaveNoteUseCase
 import com.ralphmarondev.springnote.note.presentation.new_note.NewNoteViewModel
+import com.ralphmarondev.springnote.note.presentation.note_details.NoteDetailsViewModel
 import com.ralphmarondev.springnote.note.presentation.note_list.NoteListViewModel
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
@@ -21,4 +22,5 @@ val noteModule = module {
 
     factoryOf(::NoteListViewModel)
     factoryOf(::NewNoteViewModel)
+    factoryOf(::NoteDetailsViewModel)
 }
