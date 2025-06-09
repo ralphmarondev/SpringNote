@@ -1,5 +1,6 @@
 package com.ralphmarondev.springnote.note.data.network
 
+import com.ralphmarondev.springnote.core.util.BASE_URL
 import com.ralphmarondev.springnote.note.data.model.Note
 import com.ralphmarondev.springnote.note.data.model.NoteRequest
 import io.ktor.client.HttpClient
@@ -9,8 +10,6 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
-
-private const val BASE_URL = "http://192.168.68.114:8085"
 
 class NoteApiService(
     private val httpClient: HttpClient
