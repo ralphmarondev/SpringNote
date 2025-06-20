@@ -1,11 +1,23 @@
 <script setup lang="ts">
 import {ref} from "vue";
+import axiosInstance from "@/axiosInstance.ts";
 
 const email = ref('')
 const password = ref('')
 
-function login() {
+const login = async () => {
   console.log(`Email: ${email.value}, Password: ${password.value}`)
+  const data = {
+    email: email.value,
+    password: password.value
+  }
+  axiosInstance.post("/users/login", data)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log('Login error:', err.response?.data || err.message)
+      })
 }
 </script>
 

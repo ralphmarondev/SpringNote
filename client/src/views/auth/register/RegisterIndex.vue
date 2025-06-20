@@ -1,12 +1,26 @@
 <script setup lang="ts">
 import {ref} from "vue";
+import axiosInstance from "@/axiosInstance.ts";
 
 const fullName = ref('')
 const email = ref('')
 const password = ref('')
 
-function register() {
+const register = async () => {
   console.log(`Full name: ${fullName.value}, Email: ${email.value}, Password: ${password.value}`)
+  const data = {
+    fullName: fullName.value,
+    email: email.value,
+    password: password.value,
+  }
+
+  axiosInstance.post('/users/register', data)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.error('Registration failed:', err.response?.data || err.message)
+      })
 }
 </script>
 
