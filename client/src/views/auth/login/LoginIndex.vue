@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import axiosInstance from "@/axiosInstance.ts";
+import {useRouter} from "vue-router";
 
 const email = ref('')
 const password = ref('')
+
+const router = useRouter()
 
 const login = async () => {
   console.log(`Email: ${email.value}, Password: ${password.value}`)
@@ -14,6 +17,7 @@ const login = async () => {
   axiosInstance.post("/users/login", data)
       .then(res => {
         console.log(res)
+        router.push("/note-list")
       })
       .catch(err => {
         console.log('Login error:', err.response?.data || err.message)
