@@ -12,7 +12,7 @@ class NoteService(
     }
 
     fun getNotes(ownerId: Long): List<Note> {
-        return repository.findAllByOwnerIdAndIsDeletedFalse(ownerId)
+        return repository.findAllByOwnerIdAndIsDeletedFalseOrderByCreateDateDesc(ownerId)
     }
 
     fun deleteNote(noteId: Long, ownerId: Long): Boolean {
