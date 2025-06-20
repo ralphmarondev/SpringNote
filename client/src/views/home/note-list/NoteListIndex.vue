@@ -3,6 +3,7 @@ import NoteCard from "@/views/home/note-list/components/NoteCard.vue";
 import {onMounted, ref} from "vue";
 import axiosInstance from "@/axiosInstance.ts";
 import NewNoteDialog from "@/views/home/note-list/components/NewNoteDialog.vue";
+import {useRouter} from "vue-router";
 
 type Note = {
   id: number
@@ -13,6 +14,7 @@ type Note = {
 
 const notes = ref<Note[]>([])
 const showDialog = ref(false)
+const router = useRouter()
 
 async function fetchNotes() {
   const res = await axiosInstance.get("/notes", {params: {ownerId: 1}})
@@ -34,6 +36,16 @@ function addNote(note: { title: string; caption: string }) {
       )
 }
 
+function logout() {
+  localStorage.clear()
+
+  // NOTES:
+  // Navigates to /login
+  // Replaces current history (no "back" to home after logout)
+  // Clears any stored auth/session info
+  router.replace({name: 'login'})
+}
+
 onMounted(fetchNotes)
 
 </script>
@@ -41,8 +53,11 @@ onMounted(fetchNotes)
 <template>
   <section class="h-screen bg-pink-50">
     <header class="bg-pink-100">
-      <div class=" py-5 w-[90%] mx-auto">
+      <div class=" py-5 w-[90%] mx-auto flex justify-between items-center">
         <div class="text-2xl text-pink-500">Spring Note</div>
+        <button @click="logout" type="button">
+          Logout
+        </button>
       </div>
     </header>
     <main class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-[90%] mx-auto mt-5" v-if="notes.length > 0">
