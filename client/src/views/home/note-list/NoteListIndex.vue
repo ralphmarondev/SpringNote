@@ -2,6 +2,7 @@
 import NoteCard from "@/views/home/note-list/components/NoteCard.vue";
 import {onMounted, ref} from "vue";
 import axiosInstance from "@/axiosInstance.ts";
+import NewNoteDialog from "@/views/home/note-list/components/NewNoteDialog.vue";
 
 type Note = {
   id: number
@@ -11,19 +12,29 @@ type Note = {
 }
 
 const notes = ref<Note[]>([])
+const showDialog = ref(false)
 
-onMounted(async () => {
-  try {
-    const response = await axiosInstance.get("/notes", {
-      params: {
-        ownerId: 1
-      }
-    })
-    notes.value = response.data
-  } catch (err) {
-    console.error('Failed to load notes: ', err)
-  }
-})
+async function fetchNotes() {
+  const res = await axiosInstance.get("/notes", {params: {ownerId: 1}})
+  notes.value = res.data
+}
+
+function addNote(note: { title: string; caption: string }) {
+  axiosInstance
+      .post("/notes/create", {
+        ownerId: 1,
+        title: note.title,
+        caption: note.caption
+      })
+      .then(fetchNotes)
+      .catch(error => console.log(error))
+      .finally(() => {
+            showDialog.value = false
+          }
+      )
+}
+
+onMounted(fetchNotes)
 
 </script>
 
@@ -44,5 +55,14 @@ onMounted(async () => {
     <main class="m-10 flex items-center justify-center" v-else>
       <h3 class="text-2xl text-pink-700">No notes yet.</h3>
     </main>
+
+    <div class="fixed bottom-6 right-6 z-50">
+      <button
+          @click="showDialog = true"
+          class="bg-pink-500 hover:bg-pink-600 text-pink-50 font-semibold py-3 px-6 rounded-sm shadow-lg transition">
+        NEW
+      </button>
+    </div>
+    <NewNoteDialog v-if="showDialog" @close="showDialog = false" @submit="addNote"/>
   </section>
 </template>
