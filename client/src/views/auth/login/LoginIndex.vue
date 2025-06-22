@@ -2,11 +2,13 @@
 import {ref} from "vue";
 import axiosInstance from "@/axiosInstance.ts";
 import {useRouter} from "vue-router";
+import {useAuthStore} from "@/stores/useAuthStore.ts";
 
 const email = ref('')
 const password = ref('')
 
 const router = useRouter()
+const authStore = useAuthStore()
 
 const login = async () => {
   console.log(`Email: ${email.value}, Password: ${password.value}`)
@@ -14,9 +16,11 @@ const login = async () => {
     email: email.value,
     password: password.value
   }
-  axiosInstance.post("/users/login", data)
+  axiosInstance.post("/auth/login", data)
       .then(res => {
         console.log(res)
+
+        authStore.setTokens(res.data.accessToken, res.data.refreshToken)
         router.push("/note-list")
       })
       .catch(err => {

@@ -14,7 +14,7 @@ const register = async () => {
     password: password.value,
   }
 
-  axiosInstance.post('/users/register', data)
+  axiosInstance.post('/auth/register', data)
       .then(res => {
         console.log(res)
       })

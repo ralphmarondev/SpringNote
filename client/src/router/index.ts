@@ -1,4 +1,5 @@
 import {createRouter, createWebHistory} from 'vue-router'
+import {useAuthStore} from "@/stores/useAuthStore.ts";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,6 +20,17 @@ const router = createRouter({
       component: () => import('@/views/home/note-list/NoteListIndex.vue')
     }
   ],
+})
+
+router.beforeEach((to, from, next) => {
+  const publicPages = ['login', 'register']
+  const authRequired = !publicPages.includes(to.name as string)
+  const authStore = useAuthStore()
+
+  if (authRequired && !authStore.accessToken) {
+    return next({name: 'login'})
+  }
+  next()
 })
 
 export default router
