@@ -1,5 +1,7 @@
-package com.ralphmarondev.spring_note.note
+package com.ralphmarondev.spring_note.note.controller
 
+import com.ralphmarondev.spring_note.note.entity.Note
+import com.ralphmarondev.spring_note.note.service.NoteService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -15,18 +17,15 @@ class NoteController(
         return ResponseEntity.ok(savedNote)
     }
 
-    // GET /notes?ownerId=1
     @GetMapping
-    fun getAllNotes(@RequestParam ownerId: Long): List<Note> {
-        return service.getNotes(ownerId = ownerId)
+    fun getAllNotes(): List<Note> {
+        return service.getNotes()
     }
 
-    // POST /notes/delete/123?ownerId=1
     @PostMapping("/delete/{noteId}")
     fun deleteNote(
-        @PathVariable noteId: Long,
-        @RequestParam ownerId: Long
+        @PathVariable noteId: Long
     ): Boolean {
-        return service.deleteNote(noteId = noteId, ownerId = ownerId)
+        return service.deleteNote(noteId = noteId)
     }
 }
